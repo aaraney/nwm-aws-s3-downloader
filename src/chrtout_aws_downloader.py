@@ -78,10 +78,15 @@ def aws_s3_file_to_xarray(s3_store_location, s3fs_object=None):
 
 
 if __name__ == '__main__':
+    aws_s3_url = 'http://noaa-nwm-retro-v2.0-pds.s3.amazonaws.com/'
+
     s3 = s3fs.S3FileSystem(anon=True, default_fill_cache=False)
-    chrt_list = aws_s3_file_list('CHRTOUT', '2017', month='02', day='01')
-    for x in chrt_list:
-        print(x)
+
+    file_list = aws_s3_file_list('LDASOUT', '1995', month='02', day='01')
+
+    for file in file_list:
+        url_prefix = '/'.join(file.split('/')[1:])
+        print('{}{}'.format(aws_s3_url, url_prefix))
 
 # s3 = boto3.client('s3')
 # nwm-archive
